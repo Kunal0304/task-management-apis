@@ -14,7 +14,7 @@ router.post('/signup', async function (req, res, next) {
       return res.status(409).json({ "message": "User already exists. Please choose a different email or username." })
     }
     else {
-      bcryptPassword = await bcrypt.hash(passWord, 16)
+      bcryptPassword = await bcrypt.hash(passWord, 10)
       const response = await user.create({ userName, passWord: bcryptPassword, role, name })
       return res.status(200).json({ "message": "User Created successfully" })
     }
@@ -29,9 +29,9 @@ router.post("/signin", async (req, res, next) => {
   try {
       const userCheck = await user.findOne({ where: { userName: userName } })
 
-      if (!userCheck) {
+    if (!userCheck) {
           return res.status(404).json({ "message": "User not found" })
-      }
+    }
       else {
           const verify = await bcrypt.compare(passWord, userCheck.passWord)
           if (verify) {
