@@ -13,7 +13,7 @@ router.post('/', authentication, async function (req, res, next) {
             return res.status(409).json({ "message": "User already exists. Please choose a different email or username." })
         }
         else {
-            bcryptPassword = await bcrypt.hash(passWord, 16)
+            bcryptPassword = await bcrypt.hash(passWord, 10)
             const response = await user.create({ userName, passWord: bcryptPassword, role, name, adminId: adminId })
             return res.status(200).json({ "message": "User Created successfully" })
         }
